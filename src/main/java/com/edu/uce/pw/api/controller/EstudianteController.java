@@ -26,22 +26,27 @@ public class EstudianteController {
 
 	// POST
 	// http://localhost:8080/API/v1.0/Matricula/estudiantes/guardar
-	@PostMapping(path = "/guardar")
+	//nivel 1 : http://localhost:8080/API/v1.0/Matricula/estudiantes
+	@PostMapping
 	public void guardar(@RequestBody Estudiante e) {
 		this.estudianteService.guardar(e);
 	}
 
 	// PUT
 	// http://localhost:8080/API/v1.0/Matricula/estudiantes/actualizar
-	@PutMapping(path = "/actualizar")
-	public void actualizar(@RequestBody Estudiante e) {
+	//nivel 1 : http://localhost:8080/API/v1.0/Matricula/estudiantes/1
+	@PutMapping(path = "/{id}")
+	public void actualizar(@RequestBody Estudiante e, @RequestParam Integer id) {
+		e.setId(id);
 		this.estudianteService.actualizar(e);
 	}
 
 	// PATCH
 	// http://localhost:8080/API/v1.0/Matricula/estudiantes/actualizarParcial
-	@PatchMapping(path = "/actualizarParcial")
-	public void actualizarParcial(@RequestBody Estudiante e) {
+	//nivel 1 : http://localhost:8080/API/v1.0/Matricula/estudiantes/1
+	@PatchMapping(path = "/{id}")
+	public void actualizarParcial(@RequestBody Estudiante e , @RequestParam Integer id) {
+		e.setId(id);
 		Estudiante e2 = this.estudianteService.buscar(e.getId());
 		if (e.getNombre() != null) {
 			e2.setNombre(e.getNombre());
@@ -57,25 +62,23 @@ public class EstudianteController {
 
 	// DELETE
 	// http://localhost:8080/API/v1.0/Matricula/estudiantes/borrar
-	@DeleteMapping(path = "/borrar/{id}")
+	//nivel 1 : http://localhost:8080/API/v1.0/Matricula/estudiantes/1
+	@DeleteMapping(path = "/{id}")
 	public void borrar(@PathVariable Integer id) {
 		this.estudianteService.borrar(id);
 	}
 
 	// GET
 	// http://localhost:8080/API/v1.0/Matricula/estudiantes/buscar
-	@GetMapping(path = "/buscar/{id}")
+	//nivel 1 : http://localhost:8080/API/v1.0/Matricula/estudiantes/1
+	@GetMapping(path = "/{id}")
 	public Estudiante buscar(@PathVariable Integer id) {
 		return this.estudianteService.buscar(id);
 	}
 
 	// http://localhost:8080/API/v1.0/Matricula/estudiantes/buscarPorGenero?genero=F&edad=20
-	/**
-	 * @param genero
-	 * @param edad
-	 * @return
-	 */
-	@GetMapping(path = "/buscarPorGenero")
+	
+	@GetMapping(path = "/{}")
 	public List<Estudiante> buscarPorGenero(@RequestParam String genero, @RequestParam Integer edad) {
 		System.out.println("edad: " + edad);
 		List<Estudiante> lista = this.estudianteService.buscarPorGenero(genero);
