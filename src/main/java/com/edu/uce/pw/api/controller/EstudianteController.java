@@ -53,7 +53,7 @@ public class EstudianteController {
 		}
 		if (e.getApellido() != null) {
 			e2.setApellido(e.getApellido());
-		}
+		}+
 		if (e.getFecha() != null) {
 			e2.setFecha(e.getFecha());
 		}
@@ -77,16 +77,16 @@ public class EstudianteController {
 	}
 
 	// http://localhost:8080/API/v1.0/Matricula/estudiantes/buscarPorGenero?genero=F&edad=20
-	
-	@GetMapping(path = "/{}")
-	public List<Estudiante> buscarPorGenero(@RequestParam String genero, @RequestParam Integer edad) {
-		System.out.println("edad: " + edad);
+	//nivel 1 : http://localhost:8080/API/v1.0/Matricula/estudiantes/genero?genero=M
+	@GetMapping(path = "/genero")
+	public List<Estudiante> buscarPorGenero(@RequestParam String genero) {
 		List<Estudiante> lista = this.estudianteService.buscarPorGenero(genero);
 		return lista;
 	}
 
 	// http://localhost:8080/API/v1.0/Matricula/estudiantes/buscarMixto/1?prueba=holaMundo
-	@GetMapping(path = "/buscarMixto/{id}")
+	//nivel 1 : http://localhost:8080/API/v1.0/Matricula/estudiantes/Mixto/1?prueba=holaMundo	
+	@GetMapping(path = "/Mixto/{id}")
 	public Estudiante buscarMixto(@PathVariable Integer id, @RequestParam String prueba) {
 		System.out.println("dato" + id);
 		System.out.println("dato" + prueba);
@@ -94,7 +94,8 @@ public class EstudianteController {
 	}
 
 	// http://localhost:8080/API/v1.0/Matricula/estudiantes/buscarTodos
-	@GetMapping(path = "/buscarTodos")
+	//nivel 1 : http://localhost:8080/API/v1.0/Matricula/estudiantes
+	@GetMapping
 	public List<Estudiante> buscarTodos() {
 		return this.estudianteService.buscarTodos();
 	}
