@@ -26,23 +26,16 @@ public class MateriaController {
 	@Autowired
 	private IMateriaService materiaService;
 
-	@PostMapping
-	public ResponseEntity<Materia> agregar(@RequestBody Materia materia) {
-		this.materiaService.agregar(materia);
-		return ResponseEntity.status(201).body(materia);
-	}
-
 	@PutMapping(path = "/{id}")
 	public ResponseEntity<Materia> modificar(@RequestBody Materia materia, @PathVariable Integer id) {
 		materia.setId(id);
 		this.materiaService.modificar(materia);
 		return ResponseEntity.status(238).body(materia);
 	}
-
-	@DeleteMapping(path = "/{id}")
-	public ResponseEntity<String> borrar(@PathVariable Integer id) {
-		this.materiaService.borrar(id);
-		return ResponseEntity.status(240).body("Borrada exitosamente");
+	@PostMapping
+	public ResponseEntity<Materia> agregar(@RequestBody Materia materia) {
+		this.materiaService.agregar(materia);
+		return ResponseEntity.status(201).body(materia);
 	}
 
 	@GetMapping(path = "/{id}")
@@ -59,12 +52,6 @@ public class MateriaController {
 		List<Materia> lista = this.materiaService.buscarPorCredito(credito);
 		return lista;
 	}
-
-	@GetMapping(path = "/mixto/{id}")
-	public Materia buscarMixto(@PathVariable Integer id) {
-		return this.materiaService.buscar(id);
-	}
-
 	@PatchMapping(path = "/{id}")
 	public ResponseEntity<Materia> actualizarParcial(@RequestBody Materia m, @PathVariable Integer id) {
 		m.setId(id);
@@ -84,4 +71,17 @@ public class MateriaController {
 		this.materiaService.modificar(materia);
 		return ResponseEntity.status(239).body(materia);
 	}
+
+	@DeleteMapping(path = "/{id}")
+	public ResponseEntity<String> borrar(@PathVariable Integer id) {
+		this.materiaService.borrar(id);
+		return ResponseEntity.status(240).body("Borrada exitosamente");
+	}
+
+	@GetMapping(path = "/mixto/{id}")
+	public Materia buscarMixto(@PathVariable Integer id) {
+		return this.materiaService.buscar(id);
+	}
+
+
 }
