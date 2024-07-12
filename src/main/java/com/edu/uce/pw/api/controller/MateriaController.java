@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +28,7 @@ public class MateriaController {
 	@Autowired
 	private IMateriaService materiaService;
 
-	@PutMapping(path = "/{id}")
+	@PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/xml")
 	public ResponseEntity<Materia> modificar(@RequestBody Materia materia, @PathVariable Integer id) {
 		materia.setId(id);
 		this.materiaService.modificar(materia);
@@ -34,7 +36,7 @@ public class MateriaController {
 		cabeceras.add("MENSAJE238", "Corresponde a la actualización de un recurso");
 		return ResponseEntity.status(238).headers(cabeceras).body(materia);
 	}
-	@PostMapping
+	@PostMapping(consumes = "application/json", produces = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<Materia> agregar(@RequestBody Materia materia) {
 		this.materiaService.agregar(materia);
 		HttpHeaders cabeceras = new HttpHeaders();
@@ -42,23 +44,24 @@ public class MateriaController {
 		return ResponseEntity.status(201).headers(cabeceras).body(materia);
 	}
 
-	@GetMapping(path = "/{id}")
+	@GetMapping(path = "/{id}", produces = "application/xml")
 	public ResponseEntity<Materia> buscar(@PathVariable Integer id) {
 		Materia materia = this.materiaService.buscar(id);
 		HttpHeaders cabeceras = new HttpHeaders();
 		cabeceras.add("MENSAJE236", "Corresponde a la busqueda de un recurso");
 		
-		return new ResponseEntity<>(this.materiaService.buscar(id), cabeceras, 236);
+		return new ResponseEntity<>(materia, cabeceras, 236);
 	}
 
-	@GetMapping(path = "/credito")
+	@GetMapping(path = "/credito", produces = "application/xml")
 	public List<Materia> buscarPorCredito(@RequestParam Integer credito) {
 		List<Materia> lista = this.materiaService.buscarPorCredito(credito);
 		HttpHeaders cabeceras = new HttpHeaders();
 		cabeceras.add("MENSAJE236", "Corresponde a la busqueda por credito de un recurso");
 		return lista;
 	}
-	@PatchMapping(path = "/{id}")
+
+		@PatchMapping(path = "/{id}", produces = "application/json", consumes = "application/json")
 	public ResponseEntity<Materia> actualizarParcial(@RequestBody Materia m, @PathVariable Integer id) {
 		m.setId(id);
 		Materia materia = this.materiaService.buscar(m.getId());
@@ -75,12 +78,14 @@ public class MateriaController {
 			materia.setSemestre(m.getSemestre());
 		}
 		this.materiaService.modificar(materia);
+
 		HttpHeaders cabeceras = new HttpHeaders();
-		cabeceras.add("MENSAJE239", "ACTUALIZACION CORRECTA");
+		cabeceras.add("mensaje_239", "Materia actualizada parcialmente");
+
 		return ResponseEntity.status(239).headers(cabeceras).body(materia);
 	}
-
-	@DeleteMapping(path = "/{id}")
+	
+	@DeleteMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> borrar(@PathVariable Integer id) {
 		this.materiaService.borrar(id);
 		HttpHeaders cabeceras = new HttpHeaders();
@@ -88,7 +93,7 @@ public class MateriaController {
 		return ResponseEntity.status(240).headers(cabeceras).body("Borrada exitosamente");
 	}
 
-	@GetMapping(path = "/mixto/{id}")
+	@GetMapping(path = "/mixto/{id}", produces = "application/json")
 	public Materia buscarMixto(@PathVariable Integer id) {
 		return this.materiaService.buscar(id);
 	}
