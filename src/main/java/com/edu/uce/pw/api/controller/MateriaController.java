@@ -30,26 +30,32 @@ public class MateriaController {
 	public ResponseEntity<Materia> modificar(@RequestBody Materia materia, @PathVariable Integer id) {
 		materia.setId(id);
 		this.materiaService.modificar(materia);
-		return ResponseEntity.status(238).body(materia);
+		HttpHeaders cabeceras = new HttpHeaders();
+		cabeceras.add("MENSAJE238", "Corresponde a la actualización de un recurso");
+		return ResponseEntity.status(238).headers(cabeceras).body(materia);
 	}
 	@PostMapping
 	public ResponseEntity<Materia> agregar(@RequestBody Materia materia) {
 		this.materiaService.agregar(materia);
-		return ResponseEntity.status(201).body(materia);
+		HttpHeaders cabeceras = new HttpHeaders();
+		cabeceras.add("MENSAJE201", "Corresponde a la creación de un recurso");
+		return ResponseEntity.status(201).headers(cabeceras).body(materia);
 	}
 
 	@GetMapping(path = "/{id}")
 	public ResponseEntity<Materia> buscar(@PathVariable Integer id) {
 		Materia materia = this.materiaService.buscar(id);
 		HttpHeaders cabeceras = new HttpHeaders();
-		cabeceras.add("mensaje_236", "Corresponde a la consulta de un recurso");
-		// return ResponseEntity.status(236).body(materia);
+		cabeceras.add("MENSAJE236", "Corresponde a la busqueda de un recurso");
+		
 		return new ResponseEntity<>(this.materiaService.buscar(id), cabeceras, 236);
 	}
 
 	@GetMapping(path = "/credito")
 	public List<Materia> buscarPorCredito(@RequestParam Integer credito) {
 		List<Materia> lista = this.materiaService.buscarPorCredito(credito);
+		HttpHeaders cabeceras = new HttpHeaders();
+		cabeceras.add("MENSAJE236", "Corresponde a la busqueda por credito de un recurso");
 		return lista;
 	}
 	@PatchMapping(path = "/{id}")
@@ -69,13 +75,17 @@ public class MateriaController {
 			materia.setSemestre(m.getSemestre());
 		}
 		this.materiaService.modificar(materia);
-		return ResponseEntity.status(239).body(materia);
+		HttpHeaders cabeceras = new HttpHeaders();
+		cabeceras.add("MENSAJE239", "ACTUALIZACION CORRECTA");
+		return ResponseEntity.status(239).headers(cabeceras).body(materia);
 	}
 
 	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<String> borrar(@PathVariable Integer id) {
 		this.materiaService.borrar(id);
-		return ResponseEntity.status(240).body("Borrada exitosamente");
+		HttpHeaders cabeceras = new HttpHeaders();
+		cabeceras.add("MENSAJE240", "BORRADO CORRECTO");
+		return ResponseEntity.status(240).headers(cabeceras).body("Borrada exitosamente");
 	}
 
 	@GetMapping(path = "/mixto/{id}")
