@@ -1,38 +1,29 @@
-package com.edu.uce.pw.api.repository.model;
+package com.edu.uce.pw.api.service.to;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
+import com.edu.uce.pw.api.repository.model.Estudiante;
+
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
 
-@Entity
-@Table(name = "materia")
-public class Materia {
+public class MateriaTO implements Serializable{
 
-	@Id
-	@SequenceGenerator(name = "seq_materia", sequenceName = "seq_materia", allocationSize = 1)
-	@GeneratedValue(generator = "seq_materia", strategy = GenerationType.SEQUENCE)
-	@Column(name = "mtr_id")
-	private Integer id;
-	@Column(name = "mtr_nombre")
+    private static final long serialVersionUID = 12L;
+    private Integer id;
+
 	private String nombre;
-	@Column(name = "mtr_creditos")
+	
 	private Integer creditos;
-	@Column(name = "mtr_precio")
+	
 	private BigDecimal precio;
-	@Column(name = "mtr_semestre")
+	
 	private String semestre;
-	@Column(name = "mtr_profesor")
+	
 	private String profesor;
-	@ManyToOne
-	@JoinColumn(name = "mate_id_estu")
+
 	private Estudiante estudiante;
 
 	// SET y GET

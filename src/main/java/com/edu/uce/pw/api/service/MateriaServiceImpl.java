@@ -1,5 +1,6 @@
 package com.edu.uce.pw.api.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.edu.uce.pw.api.repository.IMateriaRepository;
 import com.edu.uce.pw.api.repository.model.Materia;
+import com.edu.uce.pw.api.service.to.MateriaTO;
 
 @Service
 public class MateriaServiceImpl implements IMateriaService {
@@ -42,6 +44,29 @@ public class MateriaServiceImpl implements IMateriaService {
 	public List<Materia> buscarPorCredito(Integer credito) {
 		// TODO Auto-generated method stub
 		return this.iMateriaRepository.buscarPorCredito(credito);
+	}
+
+	@Override
+	public List<MateriaTO> buscarPorIdEstudiante(Integer id) {
+		// TODO Auto-generated method stub
+		List<Materia> lista = this.iMateriaRepository.buscarPorIdEstudiante(id);
+		List<MateriaTO> listaFinal= new ArrayList<>();
+		
+		for(Materia materia: lista) {
+			listaFinal.add(this.convertirTO(materia));
+		}
+
+		return listaFinal;
+	}
+
+	private MateriaTO convertirTO(Materia materia) {
+		MateriaTO materiaTO = new MateriaTO();
+		materiaTO.setId(materia.getId());
+		materiaTO.setNombre(materia.getNombre());
+		materiaTO.setCreditos(materia.getCreditos());
+		materiaTO.setEstudiante(materia.getEstudiante());
+
+		return materiaTO;
 	}
 
 }

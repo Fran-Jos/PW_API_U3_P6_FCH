@@ -3,6 +3,7 @@ package com.edu.uce.pw.api.service;
 import java.util.List;
 
 import com.edu.uce.pw.api.repository.model.Estudiante;
+import com.edu.uce.pw.api.service.to.EstudianteTO;
 
 public interface IEstudianteService {
 	//CRUD
@@ -16,4 +17,6 @@ public interface IEstudianteService {
 	
 	public List<Estudiante> buscarPorGenero(String genero);
 
+	public EstudianteTO buscarId(Integer id);
 }
+

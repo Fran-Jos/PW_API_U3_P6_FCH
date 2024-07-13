@@ -84,7 +84,6 @@ public class MateriaController {
 
 		return ResponseEntity.status(239).headers(cabeceras).body(materia);
 	}
-	
 	@DeleteMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> borrar(@PathVariable Integer id) {
 		this.materiaService.borrar(id);
