@@ -5,10 +5,6 @@ import java.math.BigDecimal;
 
 import com.edu.uce.pw.api.repository.model.Estudiante;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-
 public class MateriaTO implements Serializable{
 
     private static final long serialVersionUID = 12L;
@@ -24,17 +20,20 @@ public class MateriaTO implements Serializable{
 	
 	private String profesor;
 
-	private Estudiante estudiante;
+	private EstudianteTO estudiante;
 
 	// SET y GET
-	public Estudiante getEstudiante() {
-		return estudiante;
-	}
-	public void setEstudiante(Estudiante estudiante) {
-		this.estudiante = estudiante;
-	}
+
 	public Integer getId() {
 		return id;
+	}
+
+	public EstudianteTO getEstudiante() {
+		return estudiante;
+	}
+
+	public void setEstudiante(EstudianteTO estudiante) {
+		this.estudiante = estudiante;
 	}
 
 	public void setId(Integer id) {

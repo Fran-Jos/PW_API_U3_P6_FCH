@@ -35,7 +35,6 @@ public class Materia {
 	private String profesor;
 	@ManyToOne
 	@JoinColumn(name = "mate_id_estu")
-	@JsonIgnore
 	private Estudiante estudiante;
 
 	// SET y GET

@@ -63,8 +63,9 @@ public class MateriaServiceImpl implements IMateriaService {
 		materiaTO.setId(materia.getId());
 		materiaTO.setNombre(materia.getNombre());
 		materiaTO.setCreditos(materia.getCreditos());
-		materiaTO.setEstudiante(materia.getEstudiante());
-
+		materiaTO.setPrecio(materia.getPrecio());
+		materiaTO.setSemestre(materia.getSemestre());
+		materiaTO.setProfesor(materia.getProfesor());
 		return materiaTO;
 	}
 

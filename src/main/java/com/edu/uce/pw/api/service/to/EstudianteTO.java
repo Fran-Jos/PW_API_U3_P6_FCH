@@ -6,10 +6,6 @@ import java.util.List;
 
 import org.springframework.hateoas.RepresentationModel;
 
-import com.edu.uce.pw.api.repository.model.Materia;
-
-
-
 public class EstudianteTO extends RepresentationModel<EstudianteTO>  implements Serializable {
  
     private static final long serialVersionUID = 1L;

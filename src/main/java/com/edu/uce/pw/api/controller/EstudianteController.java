@@ -26,7 +26,6 @@ import com.edu.uce.pw.api.service.to.EstudianteTO;
 import com.edu.uce.pw.api.service.to.MateriaTO;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
- 
 
 @RestController
 @RequestMapping(path = "/estudiantes")
@@ -117,7 +116,7 @@ public class EstudianteController {
 	// Nivel 1: http://localhost:8082/API/v1.0/Matricula/estudiantes/mixto/1
 	@GetMapping(path = "/mixto/{id}", produces = "application/json")
 	public ResponseEntity<Estudiante> buscarMixto(@PathVariable Integer id) {
-		//return this.estudianteService.buscar(id);
+		// return this.estudianteService.buscar(id);
 		HttpHeaders cabeceras = new HttpHeaders();
 		cabeceras.add("mensaje_236", "BUSQUEDA MIXTA CORRECTA");
 		return ResponseEntity.status(236).headers(cabeceras).body(this.estudianteService.buscar(id));
@@ -130,22 +129,36 @@ public class EstudianteController {
 		return prueba;
 	}
 
-	//Nivel 1 : http://localhost:8082/API/v1.0/Matricula/estudiantes/hateoas/1	
+	// Nivel 1 : http://localhost:8082/API/v1.0/Matricula/estudiantes/hateoas/1
 	@GetMapping(path = "/hateoas/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public EstudianteTO buscarHateoas(@PathVariable Integer id) {
-		
 		EstudianteTO estudiante = this.estudianteService.buscarId(id);
-
-		//error esto es una carga EAGER 
-		//List<MateriaTO> lista = this.materiaService.buscarPorIdEstudiante(id);
-		//estudiante.setMateria(lista);
-		Link myLink = linkTo(methodOn(EstudianteController.class).buscarMateriasPorIdEstudiante(id)).withRel("susMaterias");
+		// error esto es una carga EAGER
+		// List<MateriaTO> lista = this.materiaService.buscarPorIdEstudiante(id);
+		// estudiante.setMateria(lista);
+		Link myLink = linkTo(methodOn(EstudianteController.class).buscarMateriasPorIdEstudiante(id))
+				.withRel("susMaterias");
 		return estudiante.add(myLink);
 	}
 
-		//Nivel 1 : http://localhost:8082/API/v1.0/Matricula/estudiantes/1/materias GET
-		@GetMapping(path = "/{id}/materias" , produces = "application/json")
-		public List<MateriaTO> buscarMateriasPorIdEstudiante(@PathVariable Integer id){
-			return this.materiaService.buscarPorIdEstudiante(id);
+	// Nivel 1 : http://localhost:8082/API/v1.0/Matricula/estudiantes/1/materias GET
+	@GetMapping(path = "/{id}/materias", produces = "application/json")
+	public List<MateriaTO> buscarMateriasPorIdEstudiante(@PathVariable Integer id) {
+		return this.materiaService.buscarPorIdEstudiante(id);
+	}
+
+	// Nivel 1 : http://localhost:8082/API/v1.0/Matricula/estudiantes/to
+	@GetMapping(path = "/to" , produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<EstudianteTO> buscarTodosTO(){
+		List<EstudianteTO> lista = this.estudianteService.buscarTodos();
+
+		for (EstudianteTO estudianteTO : lista) {
+			Link myLink = linkTo(methodOn(EstudianteController.class).buscarMateriasPorIdEstudiante(estudianteTO.getId()))
+					.withRel("susMaterias");
+			estudianteTO.add(myLink);
 		}
+		return lista;
+	}
+
+
 }
