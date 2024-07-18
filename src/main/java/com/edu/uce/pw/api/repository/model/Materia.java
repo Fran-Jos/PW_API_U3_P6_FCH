@@ -2,6 +2,8 @@ package com.edu.uce.pw.api.repository.model;
 
 import java.math.BigDecimal;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -33,6 +35,7 @@ public class Materia {
 	private String profesor;
 	@ManyToOne
 	@JoinColumn(name = "mate_id_estu")
+	@JsonIgnore
 	private Estudiante estudiante;
 
 	// SET y GET

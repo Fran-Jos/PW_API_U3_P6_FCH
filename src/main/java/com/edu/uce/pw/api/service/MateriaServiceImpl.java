@@ -51,7 +51,6 @@ public class MateriaServiceImpl implements IMateriaService {
 		// TODO Auto-generated method stub
 		List<Materia> lista = this.iMateriaRepository.buscarPorIdEstudiante(id);
 		List<MateriaTO> listaFinal= new ArrayList<>();
-		
 		for(Materia materia: lista) {
 			listaFinal.add(this.convertirTO(materia));
 		}

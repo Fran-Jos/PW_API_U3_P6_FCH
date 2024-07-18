@@ -3,6 +3,7 @@ package com.edu.uce.pw.api.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,9 @@ import com.edu.uce.pw.api.service.IEstudianteService;
 import com.edu.uce.pw.api.service.IMateriaService;
 import com.edu.uce.pw.api.service.to.EstudianteTO;
 import com.edu.uce.pw.api.service.to.MateriaTO;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+ 
 
 @RestController
 @RequestMapping(path = "/estudiantes")
@@ -126,13 +130,22 @@ public class EstudianteController {
 		return prueba;
 	}
 
-	@GetMapping(path = "/hateoas/{id}", produces = "application/json")
+	//Nivel 1 : http://localhost:8082/API/v1.0/Matricula/estudiantes/hateoas/1	
+	@GetMapping(path = "/hateoas/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public EstudianteTO buscarHateoas(@PathVariable Integer id) {
 		
 		EstudianteTO estudiante = this.estudianteService.buscarId(id);
-		List<MateriaTO> lista = this.materiaService.buscarPorIdEstudiante(id);
-		estudiante.setMateria(lista);
-		return estudiante;
+
+		//error esto es una carga EAGER 
+		//List<MateriaTO> lista = this.materiaService.buscarPorIdEstudiante(id);
+		//estudiante.setMateria(lista);
+		Link myLink = linkTo(methodOn(EstudianteController.class).buscarMateriasPorIdEstudiante(id)).withRel("susMaterias");
+		return estudiante.add(myLink);
 	}
 
+		//Nivel 1 : http://localhost:8082/API/v1.0/Matricula/estudiantes/1/materias GET
+		@GetMapping(path = "/{id}/materias" , produces = "application/json")
+		public List<MateriaTO> buscarMateriasPorIdEstudiante(@PathVariable Integer id){
+			return this.materiaService.buscarPorIdEstudiante(id);
+		}
 }
