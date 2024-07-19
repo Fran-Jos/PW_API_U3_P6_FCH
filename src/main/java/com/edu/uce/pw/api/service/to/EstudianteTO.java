@@ -20,9 +20,19 @@ public class EstudianteTO extends RepresentationModel<EstudianteTO>  implements 
 
 	private String genero;
 
+	private String cedula;
+
     private List<MateriaTO> materia;
 	
 	// SETTER Y GETTERS
+
+	public String getCedula() {
+		return cedula;
+	}
+
+	public void setCedula(String cedula) {
+		this.cedula = cedula;
+	}
  
     public List<MateriaTO> getMateria() {
         return materia;

@@ -40,8 +40,20 @@ public class Estudiante {
 
 	@OneToMany(mappedBy = "estudiante")
 	private List<Materia> materia;
+
+	@Column(name = "estu_cedula")
+	private String cedula;
+
 	
 	// SETTER Y GETTERS
+	public String getCedula() {
+		return cedula;
+	}
+	
+	public void setCedula(String cedula) {
+		this.cedula = cedula;
+	}
+	
 	public List<Materia> getMateria() {
 		return materia;
 	}

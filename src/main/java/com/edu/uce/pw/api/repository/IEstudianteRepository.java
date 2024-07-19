@@ -18,4 +18,6 @@ public interface IEstudianteRepository {
 	public List<Estudiante> buscarPorGenero(String genero);
 
 	public List<Estudiante> buscarTodos();
+
+	public Estudiante buscarPorCedula(String cedula);
 }

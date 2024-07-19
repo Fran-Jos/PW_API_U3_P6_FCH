@@ -160,5 +160,14 @@ public class EstudianteController {
 		return lista;
 	}
 
+	// Nivel 1 : http://localhost:8082/API/v1.0/Matricula/estudiantes/buscarPorCedula?cedula=123456	
+	@GetMapping(path = "/buscarPorCedula/{cedula}", produces = "application/json")
+	public EstudianteTO buscarPorCedula(@PathVariable String cedula) {
+		EstudianteTO estudiante = this.estudianteService.buscarPorCedula(cedula);
+		Link myLink = linkTo(methodOn(EstudianteController.class).buscarMateriasPorIdEstudiante(estudiante.getId()))
+				.withRel("susMaterias");
+		return estudiante.add(myLink);
+	}
+
 
 }
